@@ -11,18 +11,22 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/')));
 app.use(cors())
 
-mongoose.connect(process.env.MONGO_URI, {
-    user: process.env.MONGO_USERNAME,
-    pass: process.env.MONGO_PASSWORD,
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}, function(err) {
-    if (err) {
-        console.log("error!! " + err)
-    } else {
-      //  console.log("MongoDB Connection Successful")
-    }
-})
+app.use(express.static(path.join(__dirname, '/')));
+app.use(cors())
+
+const mongoUri = 'mongodb+srv://supercluster.d83jj.mongodb.net/superData';
+const mongoOptions = {
+    user: 'superuser',
+    pass: 'SuperPassword'
+};
+
+mongoose.connect(mongoUri, mongoOptions)
+    .then(() => {
+        console.log("MongoDB Connection Successful");
+    })
+    .catch((err) => {
+        console.log("error!! " + err);
+    });
 
 var Schema = mongoose.Schema;
 
@@ -37,20 +41,21 @@ var dataSchema = new Schema({
 var planetModel = mongoose.model('planets', dataSchema);
 
 
-
-app.post('/planet',   function(req, res) {
-   // console.log("Received Planet ID " + req.body.id)
-    planetModel.findOne({
-        id: req.body.id
-    }, function(err, planetData) {
-        if (err) {
-            alert("Ooops, We only have 9 planets and a sun. Select a number from 0 - 9")
-            res.send("Error in Planet Data")
-        } else {
-            res.send(planetData);
+// ...existing code...
+app.post('/planet', async function(req, res) {
+    try {
+        const id = Number(req.body.id);
+        const planetData = await planetModel.findOne({ id }).exec();
+        if (!planetData) {
+            return res.status(404).send({ error: 'Planet not found' });
         }
-    })
+        res.send(planetData);
+    } catch (err) {
+        console.error("Error fetching planet:", err);
+        res.status(500).send({ error: "Error in Planet Data" });
+    }
 })
+
 
 app.get('/',   async (req, res) => {
     res.sendFile(path.join(__dirname, '/', 'index.html'));
