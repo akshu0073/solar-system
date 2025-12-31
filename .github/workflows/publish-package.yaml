@@ -8,6 +8,7 @@ jobs:
     test-publish-packages:
       runs-on: ubuntu-latest
       permissions: 
+        id-token: write
         packages: write
         contents: read
       steps:
