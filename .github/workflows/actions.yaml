@@ -81,6 +81,8 @@ jobs:
     docker:
       name: docker build and push
       needs: [unit-testing,code-coverage]
+      permissions:
+        packages: write
       runs-on: ubuntu-latest
       steps:
         - name: checkout to repository
