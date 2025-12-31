@@ -80,6 +80,7 @@ jobs:
             retention-days: 5
     docker:
       name: docker build and push
+      needs: [unit-testing,code-coverage]
       runs-on: ubuntu-latest
       steps:
         - name: checkout to repository
@@ -112,7 +113,7 @@ jobs:
             severity: 'HIGH,CRITICAL'
             ignore-unfixed: true
             output: 'trivy-results.sarif'
-            
+
         - name: Upload Trivy scan results to GitHub Code Scanning
           uses: github/codeql-action/upload-sarif@v3
           with:
