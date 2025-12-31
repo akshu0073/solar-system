@@ -1,0 +1,28 @@
+name: Publish Package to Github NPM Registry
+
+on:
+  release: 
+    types: published
+
+jobs:
+    test-publish-packages:
+      runs-on: ubuntu-latest
+      permissions: 
+        packages: write
+        contents: read
+      steps:
+        - name: Checkout repository
+          uses: actions/checkout@v4
+
+        - uses: actions/setup-node@v4
+          with:
+            node-version: '20.x'
+            registry-url: 'https://registry.npmjs.org'
+
+        - name: Install dependencies
+          run: npm install
+
+        - name: Publish to github registry
+          run: npm publish --provenance --access public
+          env:
+            NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
