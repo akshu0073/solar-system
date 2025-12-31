@@ -17,8 +17,8 @@ jobs:
         name: Unit testing
         strategy:
           matrix:
-            nodejs_version: [18]
-            operating_system: [ubuntu-latest]
+            nodejs_version: [18,19,20]
+            operating_system: [ubuntu-latest,windows-latest]
         runs-on: ubuntu-latest
         steps:
         - name: Checkout repository
@@ -33,10 +33,12 @@ jobs:
           run: npm install
 
         - name: Unit testing
+          id: nodejs-unit-testing-step
           run: npm test
 
         - name: Archive test resultes
           uses: actions/upload-artifact@v4
+          if: steps.nodejs-unit-testing-step.outcome == 'failure' || steps.nodejs-unit-testing-step.outcome == 'failure'
           with:
             name: Macha-test-result
             path: test-results.xml
