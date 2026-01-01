@@ -145,8 +145,15 @@ jobs:
             version: 'v1.34.0'
           id: install
 
+        - uses: azure/k8s-set-context@v4
+          with:
+             method: kubeconfig
+             kubeconfig: kubeconfig
+             context: ${{ secrets.KUBECONFIG }} # current-context from kubeconfig is used as default
+
         - name: Fetch Kubernetes Cluster details
           run: |
             kubectl version
             echo --------------------------------
             kubectl get nodes
+
