@@ -142,7 +142,7 @@ jobs:
         - name: Install kubectl CLI
           uses: azure/setup-kubectl@v4
           with:
-            version: '1.34'
+            version: 'v1.34.0'
           id: install
 
         - name: Fetch Kubernetes Cluster details
