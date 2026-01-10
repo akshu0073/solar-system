@@ -161,8 +161,8 @@ jobs:
         - name: Replace tokens in manifest file
           uses: cschleiden/replace-tokens@v1
           with:
-            tokenPrefix: '{'
-            tokenSuffix: '}'
+            tokenPrefix: '__'
+            tokenSuffix: '__'
             files: '["kubernetes/development/*.yaml"]'
           env:
             NAMESPACE: ${{ vars.NAMESPACE }}
@@ -187,4 +187,14 @@ jobs:
         - name: Dev Deployment
           run: |
             kubectl apply -f  kubernetes/development
+
+    integration-testing:
+      needs: dev-deploy
+      runs-on: ubuntu-latest
+      steps:
+      - name: Test url-output
+        run: |
+          echo $URL
+          echo "..............................."
+          curl https://$URL/live -s -k | jq -r .status | grep -i live
 
