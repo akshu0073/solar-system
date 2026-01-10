@@ -134,6 +134,8 @@ jobs:
               ghcr.io/${{github.repository_owner}}/node-test:${{ github.sha }}
     dev-deploy:
       needs: docker
+      outputs: 
+        APP_INGRESS_URL: ${{ steps.set-ingress-host-address.outputs.name.APP_INGRESS_HOST }}
       runs-on: ubuntu-latest
       steps:
         - name: Checkout repository
@@ -187,6 +189,11 @@ jobs:
         - name: Dev Deployment
           run: |
             kubectl apply -f  kubernetes/development
+
+        - name: Set App ingress HOST Url
+          id: set-ingress-host-address
+          run: |
+            echo "APP_INGRESS_HOST=$(kubectl -n ${{ vars.NAMESPACE }} get ingress -o jsonpath="{.items[0].spec.tls[0].hosts[0]}")" >> "$GITHUB_OUTPUT"
 
     integration-testing:
       needs: dev-deploy
