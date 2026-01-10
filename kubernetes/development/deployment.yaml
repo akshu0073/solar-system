@@ -19,7 +19,7 @@ spec:
       containers:
       - image: _{_IMAGE_}_
         imagePullPolicy: Always
-        name: solar-system
+        name: node-test
         ports:
         - containerPort: 3000
           name: http

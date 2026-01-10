@@ -168,3 +168,10 @@ jobs:
             NAMESPACE: ${{ vars.NAMESPACE }}
             REPLICAS: ${{ vars.REPLICAS }}
             IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/node-test:${{ github.sha}}
+
+        - name: Show replaced files
+          run: |
+            ls -l kubernetes/development
+            echo "---- deployment.yaml ----"
+            cat kubernetes/development/deployment.yaml
+            cat kubernetes/development/service.yaml
