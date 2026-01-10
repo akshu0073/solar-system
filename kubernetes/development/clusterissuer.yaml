@@ -14,5 +14,5 @@ spec:
           parentRefs:
           - kind: Gateway
             group: gateway.networking.k8s.io
-            name: nginx
+            name: main-gateway
             namespace: default
