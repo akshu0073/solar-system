@@ -172,6 +172,4 @@ jobs:
         - name: Show replaced files
           run: |
             ls -l kubernetes/development
-            echo "---- deployment.yaml ----"
-            cat kubernetes/development/deployment.yaml
-            cat kubernetes/development/service.yaml
+            cat kubernetes/development/*.yaml
