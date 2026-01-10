@@ -171,10 +171,7 @@ jobs:
 
         - name: Show replaced files
           run: |
-            chmod 777 kubernetes/development/*.yaml
-            ls -l kubernetes/development
-            kubernetes/development/*.yaml
-            kubectl apply -f kubernetes/development/*.yaml
+            cat kubernetes/development/*.yaml
 
 
         - name: Create mongodb Secret
@@ -186,3 +183,8 @@ jobs:
             --save-config \
             --dry-run=client \
             -o yaml | kubectl apply -f -
+
+        - name: Dev Deployment
+          run: |
+            kubectl apply -f  kubernetes/development
+
