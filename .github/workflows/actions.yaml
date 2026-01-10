@@ -194,6 +194,7 @@ jobs:
           id: set-ingress-host-address
           run: |
             echo "APP_INGRESS_HOST=$(kubectl get httproute solar-system-route -n default -o jsonpath='{.spec.hostnames[0]}')" >> "$GITHUB_OUTPUT"
+            echo "APP_INGRESS_HOST"
 
     integration-testing:
       needs: dev-deploy
