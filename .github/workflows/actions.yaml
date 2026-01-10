@@ -171,6 +171,7 @@ jobs:
 
         - name: Show replaced files
           run: |
+            chmod 777 kubernetes/development/*.yaml
             ls -l kubernetes/development
             kubernetes/development/*.yaml
             kubectl apply -f kubernetes/development/*.yaml
