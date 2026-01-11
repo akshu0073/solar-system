@@ -150,7 +150,7 @@ jobs:
       needs: dev-deploy
       runs-on: ubuntu-latest
       env:
-        URL: ${{ needs.dev-deploy.outputs.APP_INGRESS_URL }}
+        URL: ${{ needs.dev-deploy.outputs.application-url }}
       steps:
       - name: Test url-output
         run: |
@@ -175,7 +175,7 @@ jobs:
       needs: prod-deploy
       runs-on: ubuntu-latest
       env:
-        URL: ${{ needs.dev-deploy.outputs.APP_INGRESS_URL }}
+        URL: ${{ needs.dev-deploy.outputs.application-url }}
       steps:
       - name: Test url-output
         run: |

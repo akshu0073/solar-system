@@ -2,11 +2,9 @@ name: Solar-system Deployment reusable workflow
 
 on:
     workflow_call: 
-      secrets:
-        k8s-kubeconfig:
-            required: true
-        mongodb-password:
-            required: true
+      outputs:
+        application-url:
+          value: ${{ jobs.reuse-deploy.outputs.APP_INGRESS_URL}}
       inputs:
         mongodb-uri:
             required: true
@@ -26,6 +24,12 @@ on:
             type: string
             default: dev
             description: Provide the deployment environment
+      secrets:
+        k8s-kubeconfig:
+            required: true
+        mongodb-password:
+            required: true
+
 jobs:
     reuse-deploy:
         runs-on: ubuntu-latest
