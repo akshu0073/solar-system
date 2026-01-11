@@ -136,6 +136,7 @@ jobs:
       if: contains(github.ref, 'feature/')
       needs: docker
       uses: ./.github/workflows/reuse-deployment.yaml
+      secrets: inherit
 
     dev-integration-testing:
       if: contains(github.ref, 'feature/')
