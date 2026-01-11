@@ -47,3 +47,6 @@ If the installation was successful, you should be able to run the following comm
 ## Access Application on Browser
     http://localhost:3000/
 
+## For deployment using gateway API refer this docs
+https://www.digitalocean.com/community/tutorials/https-traffic-routing-gateway-api-cilium
+
