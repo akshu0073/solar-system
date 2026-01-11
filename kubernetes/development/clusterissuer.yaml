@@ -4,7 +4,7 @@
 #   name: letsencrypt-staging
 # spec:
 #   acme:
-#     server: https://acme-staging-v02.api.letsencrypt.org/directory
+#     server: https://acme-staging-v02.api.letsencrypt.org/directory   ##  https://acme-v02.api.letsencrypt.org/directory use this one for production
 #     email: pramodhbr29@gmail.com
 #     privateKeySecretRef:
 #       name: letsencrypt-staging
