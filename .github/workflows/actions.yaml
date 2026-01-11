@@ -199,6 +199,9 @@ jobs:
     integration-testing:
       needs: dev-deploy
       runs-on: ubuntu-latest
+      environment:
+        name: development
+        url: 
       env:
         URL: ${{ needs.dev-deploy.outputs.APP_INGRESS_URL }}
       steps:
@@ -206,5 +209,5 @@ jobs:
         run: |
           echo $URL
           echo "..............................."
-          curl http://$URL/live -s -k | jq -r .status | grep -i live
+          curl https://$URL/live -fsS -k | jq -r .status | grep -i live
 
