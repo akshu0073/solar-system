@@ -133,6 +133,7 @@ jobs:
               kloude/node-test:${{ github.sha}}
               ghcr.io/${{github.repository_owner}}/node-test:${{ github.sha }}
     dev-deploy:
+      if: contains(github.ref, 'feature/')
       needs: docker
       environment:
         name: development
@@ -200,6 +201,7 @@ jobs:
             echo "APP_INGRESS_HOST"
 
     dev-integration-testing:
+      if: contains(github.ref, 'feature/')
       needs: dev-deploy
       runs-on: ubuntu-latest
       env:
@@ -211,7 +213,8 @@ jobs:
           echo "..............................."
           curl https://$URL/live -fsS -k | jq -r .status | grep -i live
     prod-deploy:
-      needs: [dev-deploy,dev-integration-testing]
+      if: github.ref== 'refs/heads/main'
+      needs: [docker]
       environment:
         name: production
         url: https://${{ steps.set-ingress-host-address.outputs.APP_INGRESS_HOST }}
@@ -278,6 +281,7 @@ jobs:
             echo "APP_INGRESS_HOST"
 
     prod-integration-testing:
+      if: github.ref== 'refs/heads/main'
       needs: prod-deploy
       runs-on: ubuntu-latest
       env:
